@@ -4,7 +4,7 @@ import numpy as np
 import pickle as pkl
 
 from qiskit import IBMQ
-
+from qiskit_ibm_provider import IBMProvider
 from elivagar.utils.dataset_circuit_hyperparams import dataset_circuit_hyperparams
 from elivagar.circuits.device_aware import generate_device_aware_gate_circ
 
@@ -48,10 +48,9 @@ def main():
     
     if args.braket_device_properties_path is None:
         try:
-            provider = IBMQ.enable_account(
-                'f9be8ebe6cc0b5c9970ca5ae86acad18c1dfb3844ed12b381a458536fcbf46499d62dbb33da9a07627774441860c64ac44e76a6f27dc6f09bba7e0f2ce68e9ff')
+            provider = IBMProvider(token='83eba755765be1c9ae5842f4ccec919e00503a4cccaec4a39ee7ee74e016a8a5a5e5ab7a6bf1cdf167c692ab2c8cab1ca41a004f50251efc17dd81cb05645194')
         except:
-            provider = IBMQ.load_account()
+            provider = IBMProvider()
 
         backend = provider.get_backend(args.device_name)
         dev_properties = None
