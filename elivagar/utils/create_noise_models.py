@@ -2,9 +2,10 @@ import qiskit
 import pennylane as qml
 import pickle as pkl
 import os
-import qiskit.providers.aer.noise as noise
+import qiskit_aer.noise as noise
 
-from qiskit import IBMQ
+# from qiskit import IBMQ
+from qiskit_ibm_provider import IBMProvider
 import qiskit.circuit.library as gate_lib
 
 from elivagar.circuits.device_aware import (
@@ -128,10 +129,9 @@ def noisy_dev_from_backend(backend_name, num_qubits):
     Create a pennylane device that uses a noise model based on the backend with the name passed in.
     """
     try:
-        provider = IBMQ.enable_account(
-            'f9be8ebe6cc0b5c9970ca5ae86acad18c1dfb3844ed12b381a458536fcbf46499d62dbb33da9a07627774441860c64ac44e76a6f27dc6f09bba7e0f2ce68e9ff')
+        provider = IBMProvider(token='83eba755765be1c9ae5842f4ccec919e00503a4cccaec4a39ee7ee74e016a8a5a5e5ab7a6bf1cdf167c692ab2c8cab1ca41a004f50251efc17dd81cb05645194')
     except:
-        provider = IBMQ.load_account()
+        provider = IBMProvider()
     
     backend = provider.get_backend(backend_name)
     noise_model = noise.NoiseModel.from_backend(backend)
@@ -146,10 +146,9 @@ def get_real_backend_dev(backend_name, num_qubits):
     Get the real IBMQ backend with the backend name passed in.
     """
     try:
-        provider = IBMQ.enable_account(
-            'f9be8ebe6cc0b5c9970ca5ae86acad18c1dfb3844ed12b381a458536fcbf46499d62dbb33da9a07627774441860c64ac44e76a6f27dc6f09bba7e0f2ce68e9ff')
+        provider = IBMProvider(token='83eba755765be1c9ae5842f4ccec919e00503a4cccaec4a39ee7ee74e016a8a5a5e5ab7a6bf1cdf167c692ab2c8cab1ca41a004f50251efc17dd81cb05645194')
     except:
-        provider = IBMQ.load_account()
+        provider = IBMProvider()
         
     dev = qml.device('qiskit.ibmq', wires=num_qubits, backend=backend_name, provider=provider)
     
@@ -158,13 +157,12 @@ def get_real_backend_dev(backend_name, num_qubits):
 
 def get_noise_model(device_name):
     try:
-        provider = IBMQ.enable_account(
-            'f9be8ebe6cc0b5c9970ca5ae86acad18c1dfb3844ed12b381a458536fcbf46499d62dbb33da9a07627774441860c64ac44e76a6f27dc6f09bba7e0f2ce68e9ff')
+        provider = IBMProvider(token='83eba755765be1c9ae5842f4ccec919e00503a4cccaec4a39ee7ee74e016a8a5a5e5ab7a6bf1cdf167c692ab2c8cab1ca41a004f50251efc17dd81cb05645194')        
     except:
-        provider = IBMQ.load_account()
+        provider = IBMProvider()
         
     backend = provider.get_backend(device_name)
-    noise_model = noise.NoiseModel.from_backend(backend)
+    noise_model = noise.NoiseModel.from_backend(backend.properties())
     config = backend.configuration().to_dict()
     
     device_properties_folder = f'./device_properties/ibm'

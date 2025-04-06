@@ -36,10 +36,11 @@ def run_qiskit_circ(circuit, dev, num_meas_qubits, num_shots=1024, transpile_cir
         qubit_mapping = [i for i in range(circuit.num_qubits)]
     
     if transpile_circ:
-        circuit = transpile(circuit, basis_gates=basis_gates, coupling_map=coupling_map,
+        circuit = transpile(circuit, backend=dev, basis_gates=['id', 'rz', 'sx', 'x', 'rzx'], coupling_map=coupling_map,
                            initial_layout=list(qubit_mapping), optimization_level=opt_level)
     
-    outputs = execute(circuit, backend=dev, shots=num_shots).result().get_counts()
+    # outputs = execute(circuit, backend=dev, shots=num_shots).result().get_counts()
+    outputs = dev.run(circuit, shots=num_shots).result().get_counts()
     
     if mode == 'exp':
         qubit_probs = np.zeros((num_meas_qubits, 2))

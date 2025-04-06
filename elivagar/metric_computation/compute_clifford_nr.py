@@ -2,12 +2,12 @@ import numpy as np
 import os
 import pennylane as qml
 
-from qiskit.providers.aer import AerSimulator
-from braket.devices import LocalSimulator 
+from qiskit_aer import AerSimulator
+# from braket.devices import LocalSimulator 
 
-from elivagar.utils.braket_devices import get_braket_device
+# from elivagar.utils.braket_devices import get_braket_device
 from elivagar.utils.create_noise_models import get_real_backend_dev, noisy_dev_from_backend, get_noise_model
-from elivagar.circuits.create_circuit import create_gate_circ, create_qiskit_circ, create_braket_gate_circ
+from elivagar.circuits.create_circuit import create_gate_circ, create_qiskit_circ, create_batched_gate_circ
 from elivagar.circuits.arbitrary import get_circ_params
 from elivagar.utils.datasets import load_dataset
 from elivagar.inference.noise_model import run_qiskit_circ
@@ -189,8 +189,9 @@ def compute_clifford_nr_for_circuits(circ_dir, num_circs, device_name,
         # noisy_dev = AerSimulator(noise_model=noise_model, basis_gates=['cx', 'rz', 'x', 's', 'id', 'h', 'z', 'y'], coupling_map=coupling_map)
     else:
         if use_real_backend:
-            noisy_dev = get_braket_device(device_name)
-            noiseless_dev = LocalSimulator()
+            # noisy_dev = get_braket_device(device_name)
+            # noiseless_dev = LocalSimulator()
+            print("Using real backend, and we haven't finished it yet!")
         else:
             raise ValueError('Cannot set both use_real_backend and use_qiskit to False!')
 
