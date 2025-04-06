@@ -156,6 +156,7 @@ def get_real_backend_dev(backend_name, num_qubits):
 
 
 def get_noise_model(device_name):
+    # 这里指定noise_model时间
     try:
         provider = IBMProvider(token='83eba755765be1c9ae5842f4ccec919e00503a4cccaec4a39ee7ee74e016a8a5a5e5ab7a6bf1cdf167c692ab2c8cab1ca41a004f50251efc17dd81cb05645194')        
     except:
