@@ -2,7 +2,7 @@ import argparse
 import os
 import numpy as np
 import torch
-import qiskit.providers.aer.noise as noise
+import qiskit_aer.noise as noise
 import time
 
 from qiskit import IBMQ

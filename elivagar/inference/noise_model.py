@@ -5,7 +5,7 @@ import pennylane as qml
 import os
 
 from qiskit import execute
-from qiskit.providers.aer import AerSimulator
+from qiskit_aer import AerSimulator
 from qiskit.compiler import transpile
 from qiskit.transpiler import Layout
 
@@ -288,6 +288,6 @@ def run_noisy_inference_for_tq_circuits_pennylane(circ_dir, circ_prefix, num_cir
         else:
             curr_circ_dir = os.path.join(circ_dir, f'{circ_prefix}_{i + 1}')
         
-        tq_model_inference_on_noisy_sim(curr_circ_dir, device_name, num_runs, meas_qubits, noisy_dev, x_test, y_test, None, True)
+        tq_model_inference_on_noisy_sim_pennylane(curr_circ_dir, device_name, num_runs, meas_qubits, noisy_dev, x_test, y_test, None, True)
         
         print(i)
