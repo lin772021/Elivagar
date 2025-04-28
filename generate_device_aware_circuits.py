@@ -60,7 +60,7 @@ def main():
     
     for i in range(args.num_circs):
         curr_circ_dir = os.path.join(args.save_dir, f'circ_{i + 1}')
-        
+        print(f"circ_{i + 1}")
         if not os.path.exists(curr_circ_dir):
             os.makedirs(curr_circ_dir)
             

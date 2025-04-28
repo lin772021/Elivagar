@@ -261,7 +261,7 @@ def run_noisy_inference_for_tq_circuits_qiskit(circ_dir, circ_prefix, num_circs,
         print(i)
         
     print(np.mean(np.sort(all_accs)[5:]))
-        
+    print(f'Highest accuracy: {np.max(all_accs)}')    
         
 def run_noisy_inference_for_tq_circuits_pennylane(circ_dir, circ_prefix, num_circs, num_runs, num_qubits, meas_qubits, device_name, dataset,
                                         embed_type, num_data_reps, num_test_samples=None, human_design=False, compute_noiseless=False,

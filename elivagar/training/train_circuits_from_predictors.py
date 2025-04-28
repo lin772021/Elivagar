@@ -58,7 +58,7 @@ def train_elivagar_circuits(circ_dir, dataset, embed_type, num_data_reps, device
         circ_gates, gate_params, inputs_bounds, weights_bounds = get_circ_params(os.path.join(circ_dir, f'circ_{curr_best_circuit_ind + 1}'))
 
         # 将qubit_mapping存储到对应的文件中
-        qubit_mapping = np.genfromtxt(os.path.join(circ_dir, f'circ_{curr_best_circuit_ind + 1}'))
+        qubit_mapping = np.genfromtxt(os.path.join(circ_dir, f'circ_{curr_best_circuit_ind + 1}/qubit_mapping.txt'))
         
         np.savetxt(curr_circ_dir + '/gates.txt', circ_gates, fmt="%s")
         np.savetxt(curr_circ_dir + '/gate_params.txt', gate_params, fmt="%s")

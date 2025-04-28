@@ -183,7 +183,7 @@ def compute_clifford_nr_for_circuits(circ_dir, num_circs, device_name,
         coupling_map = None
 
         if noise_model is None and ('ibm' in device_name):
-            noise_model, basis_gates, coupling_map = get_noise_model(device_name)
+            noise_model, basis_gates, coupling_map = get_noise_model(device_name, mode='train')
             
         noisy_dev = AerSimulator(noise_model=noise_model, basis_gates=basis_gates, coupling_map=coupling_map)
         # noisy_dev = AerSimulator(noise_model=noise_model, basis_gates=['cx', 'rz', 'x', 's', 'id', 'h', 'z', 'y'], coupling_map=coupling_map)

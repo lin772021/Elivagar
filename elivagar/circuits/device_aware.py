@@ -1,3 +1,4 @@
+import datetime
 import numpy as np
 
 
@@ -254,9 +255,10 @@ def extract_properties_from_ibm_device(backend):
         'ecr': 0
     }
     
-    properties = backend.properties()
+    # 这里指定噪声时间
+    date = datetime.datetime(2025, 4, 5)
+    properties = backend.properties(datetime=date)
     config = backend.configuration()
-
     coupling_map = config.coupling_map
     num_device_qubits = config.num_qubits
     connectivity = {i : [] for i in range(num_device_qubits)}

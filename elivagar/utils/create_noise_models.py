@@ -1,10 +1,11 @@
+import datetime
 import qiskit
 import pennylane as qml
 import pickle as pkl
 import os
 import qiskit_aer.noise as noise
 
-# from qiskit import IBMQ
+from qiskit import IBMQ
 from qiskit_ibm_provider import IBMProvider
 import qiskit.circuit.library as gate_lib
 
@@ -155,28 +156,34 @@ def get_real_backend_dev(backend_name, num_qubits):
     return dev
 
 
-def get_noise_model(device_name):
+def get_noise_model(device_name, mode='test'):
     # 这里指定noise_model时间
     try:
         provider = IBMProvider(token='83eba755765be1c9ae5842f4ccec919e00503a4cccaec4a39ee7ee74e016a8a5a5e5ab7a6bf1cdf167c692ab2c8cab1ca41a004f50251efc17dd81cb05645194')        
     except:
         provider = IBMProvider()
-        
+    
+    date = datetime.datetime(2025, 4, 6)
+    if mode == 'train' :
+        date = datetime.datetime(2025, 4, 5)    
+    print(f'evluated time: {date.strftime("%Y-%m-%d")}')
+    # print(device_name)
+    # print(provider.backends())
     backend = provider.get_backend(device_name)
-    noise_model = noise.NoiseModel.from_backend(backend.properties())
+    noise_model = noise.NoiseModel.from_backend(backend.properties(datetime=date))
     config = backend.configuration().to_dict()
     
-    device_properties_folder = f'./device_properties/ibm'
+    # device_properties_folder = f'./device_properties/ibm'
     
-    if not os.path.exists(device_properties_folder):
-        os.makedirs(device_properties_folder)
+    # if not os.path.exists(device_properties_folder):
+    #     os.makedirs(device_properties_folder)
     
-    pkl.dump(
-        (config['basis_gates'], config['coupling_map']),
-        open(
-            os.path.join(device_properties_folder, '{device_name}.data'),
-            'wb'
-        )
-    )
+    # pkl.dump(
+    #     (config['basis_gates'], config['coupling_map']),
+    #     open(
+    #         os.path.join(device_properties_folder, '{device_name}.data'),
+    #         'wb'
+    #     )
+    # )
     
     return noise_model, config['basis_gates'], config['coupling_map']
